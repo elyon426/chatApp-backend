@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { registerUser, loginUser } from "../controllers/auth.controller.js";
-import { syncBulkContacts, syncSingleContact } from "../controllers/contacts.controller.js";
+import { syncBulkContacts, syncSingleContact } from "../services/getsavedUser.services.js";
 
 // Place 'export' directly before 'const'
 export const router = Router();

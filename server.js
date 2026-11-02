@@ -1,34 +1,26 @@
-
+import 'dotenv/config'; // must be first so env vars are loaded before db.js runs
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
-import {router} from './routes/routes.auth.js'; // Adjust this path to match where your router file lives
-import { router as authRouter } from './routes/auth.routes.js';
-import { router as contactsRouter } from './routes/contacts.routes.js';
-// Load environment variables from a .env file
-dotenv.config();
+import { router as authRouter } from './routes/routes.auth.js';
 
 const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // Allows the server to accept JSON data in the request body
+app.use(express.json());
 
-// Health check route (Render looks for this to ensure your app hasn't crashed)
+// Health check (Render uses this to confirm the app is alive)
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Server is running perfectly' });
 });
 
-// Routes
-app.use('/api/auth', router);
+// Routes: register, login, sync-bulk and sync-single all live in this one router
 app.use('/api/auth', authRouter);
-app.use('/api/contacts', contactsRouter);
-// Render sets the PORT environment variable automatically. Locally, it defaults to 5000.
+
+// Render sets PORT automatically; locally it falls back to 5000
 const PORT = process.env.PORT || 5000;
 
-// Host must be 0.0.0.0 for Render to bind to the network externally, defaults to localhost for local testing
-const HOST = process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost';
-
-app.listen(PORT, HOST, () => {
-  console.log(`Server is actively running on http://${HOST}:${PORT}`);
+// 0.0.0.0 works both locally and on Render
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });
