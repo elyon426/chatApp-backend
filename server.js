@@ -3,7 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import {router} from './routes/routes.auth.js'; // Adjust this path to match where your router file lives
-
+import { router as authRouter } from './routes/auth.routes.js';
+import { router as contactsRouter } from './routes/contacts.routes.js';
 // Load environment variables from a .env file
 dotenv.config();
 
@@ -20,7 +21,8 @@ app.get('/health', (req, res) => {
 
 // Routes
 app.use('/api/auth', router);
-
+app.use('/api/auth', authRouter);
+app.use('/api/contacts', contactsRouter);
 // Render sets the PORT environment variable automatically. Locally, it defaults to 5000.
 const PORT = process.env.PORT || 5000;
 
