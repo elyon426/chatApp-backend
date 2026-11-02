@@ -2,7 +2,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import router from './routes/auth.routes.js'; // Adjust this path to match where your router file lives
+import {router} from './routes/routes.auth.js'; // Adjust this path to match where your router file lives
 
 // Load environment variables from a .env file
 dotenv.config();
