@@ -1,6 +1,7 @@
 //we push the result to device
 //device stores raw token
 import {db} from '../db/db.js';
+import crypto from 'crypto';
 export async function registration(data){
     const {userName,phoneNumber,deviceId} = data;
     const plainToken = crypto.randomBytes(32).toString('hex');
