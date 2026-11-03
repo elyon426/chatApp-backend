@@ -10,7 +10,8 @@ export async function login(data){
         //confirm userId
         const incoming = crypto.createHash('sha256').update(token).digest(); 
         // Fetch tokenhash and device_id matching the specific user out of the single row
-        const [row] = await db.sql`
+        const [row] = await db
+        `
             SELECT tokenhash
             FROM devices 
             WHERE user_id = ${userId} AND device_id = ${deviceId}
